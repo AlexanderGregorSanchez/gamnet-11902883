@@ -43,12 +43,13 @@ public class Shooting : MonoBehaviourPunCallbacks
             photonView.RPC("Win", RpcTarget.All);
             killCount = 0;
         }
+
     }
     [PunRPC]
     public void Win()
     {
-         GameObject winText = GameObject.Find("Win Text");
-         winText.GetComponent<Text>().text = photonView.Owner.NickName + " has " + winThreshold +" kills and [WON]!";
+        GameObject winText = GameObject.Find("Win Text");
+        winText.GetComponent<Text>().text = photonView.Owner.NickName + " has " + winThreshold + " kills and [WON]!";
     }
 
     public void Fire()
@@ -59,17 +60,20 @@ public class Shooting : MonoBehaviourPunCallbacks
         if (Physics.Raycast(ray, out hit, 200))
         {
             photonView.RPC("CreateHitEffects", RpcTarget.All, hit.point);
-
-            if (hit.collider.gameObject.CompareTag("Player") && !hit.collider.gameObject.GetComponent<PhotonView>().IsMine)
+            if (hit.collider.gameObject.GetComponent<Shooting>().dead == false)
             {
-                hit.collider.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.AllBuffered, 25);
-
-                if(hit.collider.gameObject.GetComponent<Shooting>().health <= 0 && hit.collider.gameObject.GetComponent<Shooting>().dead == false)
+                if (hit.collider.gameObject.CompareTag("Player") && !hit.collider.gameObject.GetComponent<PhotonView>().IsMine)
                 {
-                    dead = true;
-                    AddToKillCount();
+                    hit.collider.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.AllBuffered, 25);
+
+                    if (hit.collider.gameObject.GetComponent<Shooting>().health <= 0)
+                    {
+                        dead = true;
+                        AddToKillCount();
+                    }
                 }
             }
+
         }
     }
     [PunRPC]
@@ -81,7 +85,7 @@ public class Shooting : MonoBehaviourPunCallbacks
         if (health <= 0)
         {
             Die();
-            photonView.RPC("ShowKillFeed", RpcTarget.All, info.Sender.NickName, info.photonView.Owner.NickName);
+            ShowKillFeed(info.Sender.NickName, info.photonView.Owner.NickName);
         }
     }
 
@@ -89,17 +93,9 @@ public class Shooting : MonoBehaviourPunCallbacks
     {
         killCount++;
     }
-    [PunRPC]
     public void ShowKillFeed(string killer, string victim)
     {
-        GameObject kill = Instantiate(killFeedPrefab);
-        kill.transform.SetParent(killFeedParent.transform);
-        kill.transform.localScale = Vector3.one;
-        kill.transform.localPosition = 0f;
-
-        kill.transform.Find("KillText").GetComponent<Text>().text = killer + " killed " + victim;
-
-        //Destroy(kill, 2.5f);
+        KillFeed.instance.AddNewKillListing(killer, victim);
     }
 
     [PunRPC]
@@ -125,6 +121,7 @@ public class Shooting : MonoBehaviourPunCallbacks
 
         while (respawnTime > 0)
         {
+            dead = true;
             yield return new WaitForSeconds(1.0f);
             respawnTime--;
 
@@ -149,5 +146,5 @@ public class Shooting : MonoBehaviourPunCallbacks
         healthBar.fillAmount = health / startHealth;
     }
 
-   
+
 }

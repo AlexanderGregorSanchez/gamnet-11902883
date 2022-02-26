@@ -19,7 +19,6 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
     public Avatar fpsAvatar, tpsAvatar;
 
     private Shooting shooting;
-    private GameObject playerUI;
 
     public Text playerName;
 
@@ -47,7 +46,6 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
 
             playerUi.transform.Find("FireButton").GetComponent<Button>().onClick.AddListener(() => shooting.Fire());
 
-            this.GetComponent<Shooting>().killFeedParent = playerUi.transform.GetChild(6).transform.GetChild(0).transform.GetChild(0).gameObject;
         }
         else
         {
