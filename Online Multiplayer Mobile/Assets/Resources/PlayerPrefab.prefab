@@ -4654,13 +4654,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aadac0c05f5993489633a1065328024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 2103279636504742242}
+  fpsCamera: {fileID: 2103279636504742242}
   hitEffectPrefab: {fileID: 1885993644956699206, guid: 3a40ec1f4cf39154c90e4361ab30f2ad, type: 3}
   startHealth: 100
   healthBar: {fileID: 6143800110229106463}
   winThreshold: 10
-  killFeedPrefab: {fileID: 2690076679956546773, guid: 0a79bd604eacaa4448a347df9c6d01d1, type: 3}
-  killFeedParent: {fileID: 0}
 --- !u!1 &6605614519244896434
 GameObject:
   m_ObjectHideFlags: 0

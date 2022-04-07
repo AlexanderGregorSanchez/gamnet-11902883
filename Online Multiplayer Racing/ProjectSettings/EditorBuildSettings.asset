@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/LobbyScene.unity
+    guid: 3adb158719a2fde47b23f83f67d010c9
+  - enabled: 1
+    path: Assets/Scenes/Racing Scene.unity
+    guid: 3dff0be8dbc0db4478672517d7697ed5
+  - enabled: 1
+    path: Assets/Scenes/Death Race Scene.unity
+    guid: e15a8d69ae0b88f4189176ba7473b604
+  m_configObjects: {}

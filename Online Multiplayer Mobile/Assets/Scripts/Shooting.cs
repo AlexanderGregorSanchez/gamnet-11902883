@@ -6,7 +6,7 @@ using Photon.Pun;
 
 public class Shooting : MonoBehaviourPunCallbacks
 {
-    public Camera camera;
+    public Camera fpsCamera;
     public GameObject hitEffectPrefab;
 
 
@@ -21,9 +21,6 @@ public class Shooting : MonoBehaviourPunCallbacks
     private int killCount;
     private bool dead = false;
 
-    public GameObject killFeedPrefab;
-    public GameObject killFeedParent;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -31,8 +28,6 @@ public class Shooting : MonoBehaviourPunCallbacks
         healthBar.fillAmount = health / startHealth;
 
         animator = this.GetComponent<Animator>();
-
-        photonView.RPC("ShowKillFeed", RpcTarget.All, "lkjlkj", "asdasd");
     }
 
     // Update is called once per frame
@@ -55,25 +50,22 @@ public class Shooting : MonoBehaviourPunCallbacks
     public void Fire()
     {
         RaycastHit hit;
-        Ray ray = camera.ViewportPointToRay(new Vector3(0.5f, 0.5f));
+        Ray ray = fpsCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f));
 
         if (Physics.Raycast(ray, out hit, 200))
         {
             photonView.RPC("CreateHitEffects", RpcTarget.All, hit.point);
-            if (hit.collider.gameObject.GetComponent<Shooting>().dead == false)
-            {
-                if (hit.collider.gameObject.CompareTag("Player") && !hit.collider.gameObject.GetComponent<PhotonView>().IsMine)
-                {
-                    hit.collider.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.AllBuffered, 25);
 
-                    if (hit.collider.gameObject.GetComponent<Shooting>().health <= 0)
-                    {
-                        dead = true;
-                        AddToKillCount();
-                    }
+            if (hit.collider.gameObject.CompareTag("Player") && !hit.collider.gameObject.GetComponent<PhotonView>().IsMine)
+            {
+                hit.collider.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.AllBuffered, 25);
+
+                if (hit.collider.gameObject.GetComponent<Shooting>().health <= 0 && hit.collider.gameObject.GetComponent<Shooting>().dead == false)
+                {
+                    dead = true;
+                    AddToKillCount();
                 }
             }
-
         }
     }
     [PunRPC]

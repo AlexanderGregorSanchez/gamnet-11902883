@@ -30,7 +30,7 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
 
         fpsModel.SetActive(photonView.IsMine);
         nonFpsModel.SetActive(!photonView.IsMine);
-        animator.SetBool("isLocalPlayer", photonView.IsMine);
+        //animator.SetBool("isLocalPlayer", photonView.IsMine);
         animator.avatar = photonView.IsMine ? fpsAvatar : tpsAvatar;
 
         shooting = this.GetComponent<Shooting>();
@@ -46,12 +46,16 @@ public class PlayerSetup : MonoBehaviourPunCallbacks
 
             playerUi.transform.Find("FireButton").GetComponent<Button>().onClick.AddListener(() => shooting.Fire());
 
+            animator.SetBool("isLocalPlayer", true);
+
         }
         else
         {
             playerMovementController.enabled = false;
             GetComponent<RigidbodyFirstPersonController>().enabled = false;
             fpsCamera.enabled = false;
+
+            animator.SetBool("isLocalPlayer", false);
         }
         
         

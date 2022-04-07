@@ -26,8 +26,6 @@ ScriptsOnlyBuild:
     - Photon.Pun.Demo.PunBasics.PlayerUI
     - Photon.Pun.Demo.SlotRacer.PlayerControl
     - Photon.Pun.Demo.SlotRacer.Utils.SplineWalker
-    PhotonUnityNetworking.Editor.dll:
-    - Photon.Pun.PunSceneSettings
     PhotonUnityNetworking.dll:
     - Photon.Pun.PhotonAnimatorView
     - Photon.Pun.PhotonRigidbodyView
@@ -39,8 +37,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -116,7 +116,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11866}
     - Class: 114
-      Script: {instanceID: 12104}
+      Script: {instanceID: 12102}
+    - Class: 114
+      Script: {instanceID: 12214}
     - Class: 114
       Script: {instanceID: 12328}
     - Class: 114
@@ -130,29 +132,27 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13224}
     - Class: 114
-      Script: {instanceID: 13548}
+      Script: {instanceID: 13314}
     - Class: 114
-      Script: {instanceID: 13696}
+      Script: {instanceID: 13550}
     - Class: 114
-      Script: {instanceID: 13738}
+      Script: {instanceID: 13698}
     - Class: 114
-      Script: {instanceID: 13808}
+      Script: {instanceID: 13740}
     - Class: 114
-      Script: {instanceID: 13860}
+      Script: {instanceID: 13810}
     - Class: 114
-      Script: {instanceID: 14046}
+      Script: {instanceID: 13862}
     - Class: 114
-      Script: {instanceID: 14100}
+      Script: {instanceID: 14048}
     - Class: 114
-      Script: {instanceID: 14110}
+      Script: {instanceID: 14102}
     - Class: 114
-      Script: {instanceID: 14530}
+      Script: {instanceID: 14112}
     - Class: 114
-      Script: {instanceID: 14634}
+      Script: {instanceID: 14532}
     - Class: 114
-      Script: {instanceID: 17724}
-    - Class: 114
-      Script: {instanceID: 20544}
+      Script: {instanceID: 14636}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 121
@@ -241,13 +241,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11868}
     - Class: 114
-      Script: {instanceID: 11906}
+      Script: {instanceID: 11904}
     - Class: 114
-      Script: {instanceID: 12086}
+      Script: {instanceID: 12084}
     - Class: 114
-      Script: {instanceID: 12104}
+      Script: {instanceID: 12102}
     - Class: 114
-      Script: {instanceID: 12154}
+      Script: {instanceID: 12152}
+    - Class: 114
+      Script: {instanceID: 12214}
     - Class: 114
       Script: {instanceID: 12276}
     - Class: 114
@@ -269,51 +271,49 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13224}
     - Class: 114
-      Script: {instanceID: 13460}
+      Script: {instanceID: 13314}
     - Class: 114
-      Script: {instanceID: 13548}
+      Script: {instanceID: 13462}
     - Class: 114
-      Script: {instanceID: 13560}
+      Script: {instanceID: 13550}
     - Class: 114
-      Script: {instanceID: 13654}
+      Script: {instanceID: 13562}
     - Class: 114
-      Script: {instanceID: 13668}
+      Script: {instanceID: 13656}
     - Class: 114
-      Script: {instanceID: 13680}
+      Script: {instanceID: 13670}
     - Class: 114
-      Script: {instanceID: 13738}
+      Script: {instanceID: 13682}
     - Class: 114
-      Script: {instanceID: 13808}
+      Script: {instanceID: 13740}
     - Class: 114
-      Script: {instanceID: 13860}
+      Script: {instanceID: 13810}
     - Class: 114
-      Script: {instanceID: 13888}
+      Script: {instanceID: 13862}
     - Class: 114
-      Script: {instanceID: 13918}
+      Script: {instanceID: 13890}
     - Class: 114
-      Script: {instanceID: 13940}
+      Script: {instanceID: 13920}
     - Class: 114
-      Script: {instanceID: 13950}
+      Script: {instanceID: 13942}
     - Class: 114
-      Script: {instanceID: 14046}
+      Script: {instanceID: 13952}
     - Class: 114
-      Script: {instanceID: 14100}
+      Script: {instanceID: 14048}
     - Class: 114
-      Script: {instanceID: 14110}
+      Script: {instanceID: 14102}
     - Class: 114
-      Script: {instanceID: 14138}
+      Script: {instanceID: 14112}
     - Class: 114
-      Script: {instanceID: 14322}
+      Script: {instanceID: 14140}
     - Class: 114
-      Script: {instanceID: 14530}
+      Script: {instanceID: 14324}
     - Class: 114
-      Script: {instanceID: 14634}
+      Script: {instanceID: 14532}
     - Class: 114
-      Script: {instanceID: 14676}
+      Script: {instanceID: 14636}
     - Class: 114
-      Script: {instanceID: 17724}
-    - Class: 114
-      Script: {instanceID: 20544}
+      Script: {instanceID: 14678}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -685,6 +685,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: TestResultRendererCallback
+  - hash:
+      serializedVersion: 2
+      Hash: 2dd552fb907f5dba7140d0e8e7664c62
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: KillListing
   - hash:
       serializedVersion: 2
       Hash: 5f206dd3b0d6b103c9456019be49d644
@@ -1371,6 +1377,12 @@ ScriptsOnlyBuild:
     className: AfterburnerPhysicsForce
   - hash:
       serializedVersion: 2
+      Hash: 3c7110dd537a603de91309e52b78d465
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: KillFeed
+  - hash:
+      serializedVersion: 2
       Hash: 9cc3904a86f5a119184da7351cdb4e65
     assemblyName: Assembly-CSharp-firstpass.dll
     namespaceName: UnityStandardAssets.ImageEffects
@@ -1767,7 +1779,7 @@ ScriptsOnlyBuild:
     className: SlotLanes
   - hash:
       serializedVersion: 2
-      Hash: c340312f64aa3eca315438dd195a49dc
+      Hash: ac699ce3bd8f1f6e15e22244eb642382
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Shooting
@@ -2299,18 +2311,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp-firstpass.dll
     namespaceName: UnityStandardAssets.Utility
     className: AutoMobileShaderSwitch
-  - hash:
-      serializedVersion: 2
-      Hash: 3c7110dd537a603de91309e52b78d465
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: KillFeed
-  - hash:
-      serializedVersion: 2
-      Hash: 2dd552fb907f5dba7140d0e8e7664c62
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: KillListing
   platform: 13
   scenePathNames:
   - Assets/Scenes/LobbyScene.unity
