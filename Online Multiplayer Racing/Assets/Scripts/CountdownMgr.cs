@@ -6,25 +6,15 @@ using Photon.Pun;
 
 public class CountdownMgr : MonoBehaviourPunCallbacks
 {
-    public Text timerText;
+    Text timerText;
 
-    public float timerToStartRace = 5.0f;
+    float timeToNextRound;
 
     // Start is called before the first frame update
     void Start()
     {
-        //timerText = RacingGameMgr.instance.countdownText;
-
-        if (RacingGameMgr.instance == null)
-        {
-            Debug.Log("DEATH GAME");
-            timerText = DeathRaceGameMgr.instance.countdownText;
-        }
-        else if (DeathRaceGameMgr.instance == null)
-        {
-            Debug.Log("RACE GAME");
-            timerText = RacingGameMgr.instance.countdownText;
-        }
+        timerText = GameMgr.instance.timerText;
+        timeToNextRound = GameMgr.instance.startTime;
 
     }
 
@@ -40,7 +30,7 @@ public class CountdownMgr : MonoBehaviourPunCallbacks
             }
             else if (timerToStartRace <= 0)
             {
-                photonView.RPC("StartRace", RpcTarget.AllBuffered);
+                photonView.RPC("ZoneCheck", RpcTarget.AllBuffered);
             }
         }
 
@@ -60,10 +50,11 @@ public class CountdownMgr : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void StartRace()
+    public void ZoneCheck()
     {
-        Debug.Log("START");
-        GetComponent<CarMovement>().isControlEnabled = true;
-        this.enabled = false;
+        if (!GetComponent<PlayerBehavior>().GetInZone())
+        {
+            GetComponent<PlayerDeathEvent>().Death();
+        }
     }
 }

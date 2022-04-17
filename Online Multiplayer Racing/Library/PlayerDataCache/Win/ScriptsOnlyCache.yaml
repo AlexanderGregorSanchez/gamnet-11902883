@@ -951,7 +951,7 @@ ScriptsOnlyBuild:
     className: CurrentRoomIsOpenToggle
   - hash:
       serializedVersion: 2
-      Hash: 0be37a157a94a7937cf7258ca33bee24
+      Hash: 80613066bd6cb20fd0468cd779312f0c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: DeathRaceGameMgr
